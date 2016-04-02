@@ -23,9 +23,6 @@
 <body>
 <div class = "bodyDiv">
 
-<!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
-<!-- My Phone Number & Dial Areas -->
-<!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
 	<div id="vid-box" class="video2"></div>
 	<div id="vid-thumb"></div>
 	
@@ -84,10 +81,6 @@
     
 	<div id="logs" class="ptext"></div>
 
-<p class="ptext"><b>To Use:</b></p>
-<p class="ptext">Type a username and click Log in. If input turns green you are ready to receive/place a call.</p>
-<p class="ptext">In a separate browser window, log in with a different username, and place a call to the first.</p>
-
 <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
 <!-- WebRTC Peer Connections -->
 <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
@@ -105,8 +98,8 @@ var vidCount  = 0;
 function login(form) {
 	var phone = window.phone = PHONE({
 	    number        : form.username.value || "Anonymous", // listen on username line else Anonymous
-	    publish_key   : 'pub-c-561a7378-fa06-4c50-a331-5c0056d0163c', // Your Pub Key
-	    subscribe_key : 'sub-c-17b7db8a-3915-11e4-9868-02ee2ddab7fe', // Your Sub Key
+	    publish_key   : 'pub-c-561a7378-fa06-4c50-a331-5c0056d0163c', 
+	    subscribe_key : 'sub-c-17b7db8a-3915-11e4-9868-02ee2ddab7fe', 
 	});
 	var ctrl = window.ctrl = CONTROLLER(phone);
 	ctrl.ready(function(){
@@ -136,7 +129,7 @@ function makeCall(form){
 	if (phone.number()==num) return false; // No calling yourself!
 	ctrl.isOnline(num, function(isOn){
 		if (isOn) ctrl.dial(num);
-		else alert("User if Offline");
+		else alert("User is Offline");
 	});
 	return false;
 }
