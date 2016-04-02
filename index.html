@@ -4,12 +4,21 @@
     <title>PubRTC + Mobile</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
     <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
     <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.3.0/css/font-awesome.min.css" />
     <script src="js/modernizr.custom.js"></script>
-	<link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" />
-
-
+	<link rel="stylesheet" type="text/css" href="css/normalize.css" />
+	<style>
+		#vid-box{
+			display: inline-block;
+			text-align:center;
+			width:100%;
+		}
+		#vid-box video{
+			width:47%;
+		}
+	</style>	
 </head>
 <body>
 <div class = "bodyDiv">
@@ -17,60 +26,68 @@
 <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
 <!-- My Phone Number & Dial Areas -->
 <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
-
-    
-<div id="vid-box"></div>
-    
-    
- <div id="stream-info" hidden="true">
-        <button id="end" onclick="end()" hidden="true">Done</button>
-        <img src="img/person_dark.png"/>
-        <span id="here-now">0</span>       
-</div> 
-
-    
-<form name="streamForm" id="stream" action="#" onsubmit="return errWrap(stream,this);">
-    <span class="input input--nao">
-        <input class="input__field input__field--nao" type="text" name="streamname" placeholder="Enter Stream Name" id="streamname"/>
-                <label class="input__label input__label--nao" for="streamname">
-                    <span class="input__label-content input__label-content--nao">        
+	<div id="vid-box" class="video2"></div>
+	<div id="vid-thumb"></div>
+	
+<!--
+	<form name="loginForm" id="login" action="#" onsubmit="return login(this);">
+	    <input type="text" name="username" id="username" placeholder="Pick a username!" />
+	    <input type="submit" name="login_submit" value="Log In">
+	</form>
+-->
+    <form name="loginForm" id="login" action="#" onsubmit="return errWrap(login,this);">
+        <span class="input input--nao">
+            <input class="input__field input__field--nao" type="text" name="username" id="username" placeholder="Enter A Username"/>
+                <label class="input__label input__label--nao" for="username">
+                    <span class="input__label-content input__label-content--nao">                                          
                     </span>
                 </label>
-            <svg class="graphic graphic--nao" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
-                <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"/>
-            </svg>
-    </span>
-
-      <button class="cbutton cbutton--effect-radomir" type="submit" value="Stream" name="stream_submit" style="margin-top: 40px; margin-left:-10px">
-            <i class="cbutton__icon fa fa-fw fa fa fa-video-camera"></i>
+                <svg class="graphic graphic--nao" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
+                    <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"/>
+                </svg>
+        </span>
+            
+        <button class="cbutton cbutton--effect-radomir" type="submit" name="login_submit" value="Log In" style="margin-top: 40px; margin-left:-10px">
+            <i class="cbutton__icon fa fa-fw fa fa-sign-in"></i>
         </button>
-</form>
+    </form>
+	
+<!--
+	<form name="callForm" id="call" action="#" onsubmit="return makeCall(this);">
+		<input type="text" name="number" placeholder="Enter user to dial!" />
+		<input type="submit" value="Call"/>
+	</form>
+-->
     
-
-<form name="watchForm" id="watch" action="#" onsubmit="return errWrap(watch,this);">
-    <span class="input input--nao">
-        <input class="input__field input__field--nao" type="text" name="number" placeholder="Enter Stream To Watch!"/>
-                <label class="input__label input__label--nao" for="number">
-                    <span class="input__label-content input__label-content--nao">        
-                    </span>
-                </label>
-            <svg class="graphic graphic--nao" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
-                <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"/>
-            </svg>
-    </span>
-
-       <button class="cbutton cbutton--effect-radomir" type="submit" value="Watch" style="margin-top: 40px; margin-left:-10px">
-                <i class="cbutton__icon fa fa-fw fa fa-eye"></i>
+    
+    <form name="callForm" id="call" action="#" onsubmit="return errWrap(makeCall,this);">
+        <span class="input input--nao">
+            <input class="input__field input__field--nao" type="text" name="number" id="call" placeholder="Enter User To Call!"/>
+					<label class="input__label input__label--nao" for="number">
+						<span class="input__label-content input__label-content--nao">                                          
+                        </span>
+					</label>
+				<svg class="graphic graphic--nao" width="300%" height="100%" viewBox="0 0 1200 60" preserveAspectRatio="none">
+				    <path d="M0,56.5c0,0,298.666,0,399.333,0C448.336,56.5,513.994,46,597,46c77.327,0,135,10.5,200.999,10.5c95.996,0,402.001,0,402.001,0"/>
+				</svg>
+        </span>
+        <button class="cbutton cbutton--effect-radomir md-trigger" type="submit" value="Call" style="margin-top: 40px; margin-left:-10px" data-modal="modal-13">
+            <i class="cbutton__icon fa fa-fw fa fa fa-phone-square"></i>
         </button>
-</form>  
+	</form>
+	
+	<div id="inCall" class="ptext">
+		<button id="end" onclick="end()" >End</button> 
+        <button id="mute" onclick="mute()">Mute</button> 
+        <button id="pause" onclick="pause()">Pause</button>
+	</div>
     
-<div id="logs" class="ptext" style="background-color:white"></div>
+	<div id="logs" class="ptext"></div>
 
-<div class="ptext">
-    <p><b>To Use:</b></p>
-    <p>Type a channel to stream to and click Stream.</p>
-    <p>In a separate browser window, join the steam you created.</p>
-</div>
+<p class="ptext"><b>To Use:</b></p>
+<p class="ptext">Type a username and click Log in. If input turns green you are ready to receive/place a call.</p>
+<p class="ptext">In a separate browser window, log in with a different username, and place a call to the first.</p>
+
 <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
 <!-- WebRTC Peer Connections -->
 <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=- -->
@@ -81,76 +98,63 @@
 
 <script type="text/javascript">
 
-var video_out  = document.getElementById("vid-box");
-var embed_code = document.getElementById("embed-code");
-var embed_demo = document.getElementById("embed-demo");
-var here_now   = document.getElementById('here-now');
-var stream_info= document.getElementById('stream-info');
-var end_stream = document.getElementById('end');
-
-var streamName;
-
-function stream(form) {
-	streamName = form.streamname.value || Math.floor(Math.random()*100)+'';
+var video_out = document.getElementById("vid-box");
+var vid_thumb = document.getElementById("vid-thumb");
+var vidCount  = 0;
+    
+function login(form) {
 	var phone = window.phone = PHONE({
-	    number        : streamName, // listen on username line else random
+	    number        : form.username.value || "Anonymous", // listen on username line else Anonymous
 	    publish_key   : 'pub-c-561a7378-fa06-4c50-a331-5c0056d0163c', // Your Pub Key
 	    subscribe_key : 'sub-c-17b7db8a-3915-11e4-9868-02ee2ddab7fe', // Your Sub Key
-	    oneway        : true,
-	    broadcast     : true
 	});
-	//phone.debug(function(m){ console.log(m); })
 	var ctrl = window.ctrl = CONTROLLER(phone);
 	ctrl.ready(function(){
-		form.streamname.style.background="#55ff5b";
-		form.streamname.value = phone.number(); 
-//		form.stream_submit.hidden="true"; 
-		ctrl.addLocalStream(video_out);
-		ctrl.stream();
-        stream_info.hidden=false;
-        end_stream.hidden =false;
-		addLog("Streaming to " + streamName); 
+		form.username.style.background="#55ff5b"; 
+		form.login_submit.hidden="true"; 
+		ctrl.addLocalStream(vid_thumb);
+		addLog("Logged in as " + form.username.value); 
 	});
 	ctrl.receive(function(session){
-	    session.connected(function(session){ addLog(session.number + " has joined."); });
-	    session.ended(function(session) { addLog(session.number + " has left."); console.log(session)});
+	    session.connected(function(session){ video_out.appendChild(session.video); addLog(session.number + " has joined."); vidCount++; });
+	    session.ended(function(session) { ctrl.getVideoElement(session.number).remove(); addLog(session.number + " has left.");    vidCount--;});
 	});
-	ctrl.streamPresence(function(m){
-		here_now.innerHTML=m.occupancy;
-		addLog(m.occupancy + " currently watching.");
+	ctrl.videoToggled(function(session, isEnabled){
+		ctrl.getVideoElement(session.number).toggle(isEnabled);
+		addLog(session.number+": video enabled - " + isEnabled);
+	});
+	ctrl.audioToggled(function(session, isEnabled){
+		ctrl.getVideoElement(session.number).css("opacity",isEnabled ? 1 : 0.75);
+		addLog(session.number+": audio enabled - " + isEnabled);
 	});
 	return false;
 }
 
-function watch(form){
+function makeCall(form){
+	if (!window.phone) alert("Login First!");
 	var num = form.number.value;
-	var phone = window.phone = PHONE({
-	    number        : "Viewer" + Math.floor(Math.random()*100), // listen on username line else random
-	    publish_key   : 'pub-c-9fb6f525-3deb-4a90-8543-e9e5f7b1a250',
-        subscribe_key : 'sub-c-a40fdede-f903-11e5-9086-02ee2ddab7fe',
-	    oneway        : true
-	});
-	var ctrl = window.ctrl = CONTROLLER(phone);
-	ctrl.ready(function(){
-		ctrl.isStreaming(num, function(isOn){
-			if (isOn) ctrl.joinStream(num);
-			else alert("User is not streaming!");
-		});
-		addLog("Joining stream  " + num); 
-	});
-	ctrl.receive(function(session){
-	    session.connected(function(session){ 
-            video_out.appendChild(session.video); 
-            addLog(session.number + " has joined.");
-            stream_info.hidden=false;
-        });
-	    session.ended(function(session) { addLog(session.number + " has left."); });
-	});
-	ctrl.streamPresence(function(m){
-		here_now.innerHTML=m.occupancy;
-		addLog(m.occupancy + " currently watching.");
+	if (phone.number()==num) return false; // No calling yourself!
+	ctrl.isOnline(num, function(isOn){
+		if (isOn) ctrl.dial(num);
+		else alert("User if Offline");
 	});
 	return false;
+}
+
+function mute(){
+	var audio = ctrl.toggleAudio();
+	if (!audio) $("#mute").html("Unmute");
+	else $("#mute").html("Mute");
+}
+
+function end(){
+	ctrl.hangup();
+}
+
+function pause(){
+	var video = ctrl.toggleVideo();
+	if (!video) $('#pause').html('Unpause'); 
+	else $('#pause').html('Pause'); 
 }
 
 function getVideo(number){
@@ -160,14 +164,6 @@ function getVideo(number){
 function addLog(log){
 	$('#logs').append("<p>"+log+"</p>");
 }
-
-function end(){
-	if (!window.phone) return;
-	ctrl.hangup();
-    video_out.innerHTML = "";
-//	phone.pubnub.unsubscribe(); // unsubscribe all?
-}
-
 
 function errWrap(fxn, form){
 	try {
